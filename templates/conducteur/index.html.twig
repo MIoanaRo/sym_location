@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conducteur index{% endblock %}
+
+{% block body %}
+    <h1>Conducteur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Phone_number</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conducteur in conducteurs %}
+            <tr>
+                <td>{{ conducteur.id }}</td>
+                <td>{{ conducteur.firstname }}</td>
+                <td>{{ conducteur.lastname }}</td>
+                <td>{{ conducteur.phoneNumber }}</td>
+                <td>
+                    <button class="btn btn-sm btn-success"><a href="{{ path('conducteur_create', {'id': conducteur.id}) }}">Create</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('conducteur_new') }}">Create new</a>
+{% endblock %}

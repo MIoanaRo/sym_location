@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Locations{% endblock %}
+
+{% block body %}
+    <h1>Liste des locations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Conducteur</th>
+                <th>Vehicule</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rental in rentals %}
+            <tr>
+                <td>{{ rental.id }}</td>
+                <td><a id="link-type-{{ rental.id }}" href ="#"data-rental-id="{{ rental.id }}">{{ rental.name }}</a> (Clicker pour editer)</td>
+                <div id="rental-{{ rental.id }}-edit" style="display:none;" class="btn-group">
+                    <form method="post" action="{{ path('rental_edit', {id : rental.id }) }}">
+                        <input type="text" name="name" value="{{ rental.conducteur }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('editRental' ~ rental.id) }}">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <button class="btn btn-sm btn-warning">Éditer Conducteur</button>
+                    </form>
+                <td><a href="{{ path('vehicule_show', {'id': vehicule.id}) }}">show</a>{{ rental.vehicule }}</td>
+                    <form method="post" action="{{ path('rental_edit', {id : rental.id }) }}">
+                        <input type="text" name="name" value="{{ rental.vehicule }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('editRental' ~ rental.id) }}">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <button class="btn btn-sm btn-warning">Éditer Vehicule</button>
+                    </form>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('rental_new') }}">Create new</a>
+{% endblock %}
